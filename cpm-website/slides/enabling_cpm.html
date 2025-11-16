@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <style>
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background: #FFFFFF;
+        color: #252525;
+        font-family: 'Segoe UI', sans-serif;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+      }
+      .title {
+        font-size: 36px;
+        font-weight: bold;
+        color: #0078D4;
+        margin-bottom: 20px;
+      }
+      .content {
+        display: flex;
+        justify-content: space-between;
+        flex: 1;
+      }
+      .text-section {
+        width: 48%;
+      }
+      .code-section {
+        width: 48%;
+      }
+      .subtitle {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #0078D4;
+      }
+      .text {
+        font-size: 20px;
+        line-height: 1.5;
+        margin-bottom: 15px;
+      }
+      .step {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 12px;
+      }
+      .step-number {
+        background-color: #0078D4;
+        color: white;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        margin-right: 12px;
+        flex-shrink: 0;
+      }
+      .step-text {
+        font-size: 18px;
+        line-height: 1.4;
+      }
+      .code-block {
+        background-color: #f5f5f5;
+        border-radius: 5px;
+        padding: 12px;
+        margin-bottom: 15px;
+        font-family: 'Consolas', monospace;
+        font-size: 15px;
+        line-height: 1.3;
+        overflow-x: auto;
+        color: #252525;
+      }
+      .code-comment {
+        color: #107C10;
+        font-style: italic;
+      }
+      .code-keyword {
+        color: #0078D4;
+        font-weight: bold;
+      }
+      .code-string {
+        color: #D83B01;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container">
+      <div class="title">Enabling Central Package Management</div>
+      
+      <div class="content">
+        <div class="text-section">
+          <div class="subtitle">Step-by-Step Implementation</div>
+          
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-text">
+              Create <strong>Directory.Packages.props</strong> at solution root
+            </div>
+          </div>
+          
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-text">
+              Set <strong>ManagePackageVersionsCentrally</strong> to <strong>true</strong>
+            </div>
+          </div>
+          
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-text">
+              Define package versions using <strong>PackageVersion</strong> elements
+            </div>
+          </div>
+          
+          <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-text">
+              Update project files to use <strong>PackageReference</strong> without versions
+            </div>
+          </div>
+          
+          <div class="step">
+            <div class="step-number">5</div>
+            <div class="step-text">
+              Build the solution to apply centrally managed versions
+            </div>
+          </div>
+          
+          <div class="code-block">
+            <span class="code-comment"># Create props file template (if available)</span><br>
+            dotnet new packagesprops
+          </div>
+        </div>
+        
+        <div class="code-section">
+          <div class="subtitle">Directory.Packages.props</div>
+          <div class="code-block">
+            <span class="code-keyword">&lt;Project&gt;</span><br>
+            &nbsp;&nbsp;<span class="code-keyword">&lt;PropertyGroup&gt;</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">&lt;ManagePackageVersionsCentrally&gt;</span>true<span class="code-keyword">&lt;/ManagePackageVersionsCentrally&gt;</span><br>
+            &nbsp;&nbsp;<span class="code-keyword">&lt;/PropertyGroup&gt;</span><br>
+            &nbsp;&nbsp;<span class="code-keyword">&lt;ItemGroup&gt;</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">&lt;!-- Common Packages --&gt;</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">&lt;PackageVersion</span> Include=<span class="code-string">"Newtonsoft.Json"</span> Version=<span class="code-string">"13.0.3"</span> <span class="code-keyword">/&gt;</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">&lt;PackageVersion</span> Include=<span class="code-string">"Microsoft.Extensions.Logging"</span> Version=<span class="code-string">"8.0.0"</span> <span class="code-keyword">/&gt;</span><br>
+            &nbsp;&nbsp;<span class="code-keyword">&lt;/ItemGroup&gt;</span><br>
+            <span class="code-keyword">&lt;/Project&gt;</span>
+          </div>
+          
+          <div class="subtitle">Project File (.csproj)</div>
+          <div class="code-block">
+            <span class="code-keyword">&lt;Project</span> Sdk=<span class="code-string">"Microsoft.NET.Sdk"</span><span class="code-keyword">&gt;</span><br>
+            &nbsp;&nbsp;<span class="code-keyword">&lt;ItemGroup&gt;</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">&lt;!-- No Version attribute needed --&gt;</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">&lt;PackageReference</span> Include=<span class="code-string">"Newtonsoft.Json"</span> <span class="code-keyword">/&gt;</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">&lt;PackageReference</span> Include=<span class="code-string">"Microsoft.Extensions.Logging"</span> <span class="code-keyword">/&gt;</span><br>
+            &nbsp;&nbsp;<span class="code-keyword">&lt;/ItemGroup&gt;</span><br>
+            <span class="code-keyword">&lt;/Project&gt;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

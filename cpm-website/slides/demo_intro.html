@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <style>
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background: #FFFFFF;
+        color: #252525;
+        font-family: 'Segoe UI', sans-serif;
+        padding: 40px;
+      }
+      .title {
+        font-size: 36px;
+        font-weight: bold;
+        color: #0078D4;
+        margin-bottom: 30px;
+      }
+      .content {
+        display: flex;
+        justify-content: space-between;
+      }
+      .text-section {
+        width: 48%;
+      }
+      .visual-section {
+        width: 48%;
+      }
+      .subtitle {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #0078D4;
+      }
+      .text {
+        font-size: 20px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+      }
+      .highlight {
+        color: #107C10;
+        font-weight: bold;
+      }
+      .code-block {
+        background-color: #f5f5f5;
+        border-left: 4px solid #0078D4;
+        padding: 15px;
+        font-family: monospace;
+        font-size: 16px;
+        margin-bottom: 20px;
+        overflow-x: auto;
+      }
+      .diagram-container {
+        height: 450px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container">
+      <div class="title">Demo Project Introduction</div>
+      
+      <div class="content">
+        <div class="text-section">
+          <div class="subtitle">FintechDemo Solution</div>
+          <p class="text">
+            Our demonstration project showcases Central Package Management in a typical fintech application structure:
+          </p>
+          
+          <ul class="text list-disc pl-6">
+            <li><span class="highlight">FintechDemo.Core</span>: Domain models and interfaces</li>
+            <li><span class="highlight">FintechDemo.Infrastructure</span>: Data access and external services</li>
+            <li><span class="highlight">FintechDemo.Api</span>: REST API endpoints</li>
+            <li><span class="highlight">FintechDemo.Tests</span>: Unit tests</li>
+          </ul>
+          
+          <div class="subtitle mt-6">Key Features</div>
+          <ul class="text list-disc pl-6">
+            <li>Transaction management for financial operations</li>
+            <li>Centralized package versioning</li>
+            <li>Consistent security package versions</li>
+            <li>Global analyzer configuration</li>
+          </ul>
+        </div>
+        
+        <div class="visual-section">
+          <div class="diagram-container" id="project-structure"></div>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      // D3.js diagram showing the project structure
+      const svg = d3.select("#project-structure")
+        .append("svg")
+        .attr("width", 500)
+        .attr("height", 450);
+      
+      // Define the solution file
+      svg.append("rect")
+        .attr("x", 150)
+        .attr("y", 30)
+        .attr("width", 200)
+        .attr("height", 50)
+        .attr("rx", 5)
+        .attr("ry", 5)
+        .attr("fill", "#0078D4")
+        .attr("stroke", "#004E8C")
+        .attr("stroke-width", 2);
+      
+      svg.append("text")
+        .attr("x", 250)
+        .attr("y", 60)
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .attr("font-size", "16px")
+        .attr("font-weight", "bold")
+        .text("FintechDemo.sln");
+      
+      // Define the Directory.Packages.props file
+      svg.append("rect")
+        .attr("x", 150)
+        .attr("y", 100)
+        .attr("width", 200)
+        .attr("height", 50)
+        .attr("rx", 5)
+        .attr("ry", 5)
+        .attr("fill", "#D83B01")
+        .attr("stroke", "#004E8C")
+        .attr("stroke-width", 2);
+      
+      svg.append("text")
+        .attr("x", 250)
+        .attr("y", 130)
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .attr("font-size", "16px")
+        .attr("font-weight", "bold")
+        .text("Directory.Packages.props");
+      
+      // Define the projects
+      const projects = [
+        { name: "FintechDemo.Core", x: 100, y: 220 },
+        { name: "FintechDemo.Infrastructure", x: 400, y: 220 },
+        { name: "FintechDemo.Api", x: 100, y: 320 },
+        { name: "FintechDemo.Tests", x: 400, y: 320 }
+      ];
+      
+      // Draw projects
+      projects.forEach(project => {
+        svg.append("rect")
+          .attr("x", project.x - 90)
+          .attr("y", project.y - 25)
+          .attr("width", 180)
+          .attr("height", 50)
+          .attr("rx", 5)
+          .attr("ry", 5)
+          .attr("fill", "#107C10")
+          .attr("stroke", "#004E8C")
+          .attr("stroke-width", 1);
+        
+        svg.append("text")
+          .attr("x", project.x)
+          .attr("y", project.y + 5)
+          .attr("text-anchor", "middle")
+          .attr("fill", "white")
+          .attr("font-size", "14px")
+          .attr("font-weight", "bold")
+          .text(project.name);
+        
+        // Draw arrows from central file to projects
+        svg.append("line")
+          .attr("x1", 250)
+          .attr("y1", 150)
+          .attr("x2", project.x)
+          .attr("y2", project.y - 25)
+          .attr("stroke", "#D83B01")
+          .attr("stroke-width", 2)
+          .attr("stroke-dasharray", "5,5")
+          .attr("marker-end", "url(#arrow)");
+      });
+      
+      // Draw project dependencies
+      svg.append("line")
+        .attr("x1", 100)
+        .attr("y1", 245)
+        .attr("x2", 310)
+        .attr("y2", 220)
+        .attr("stroke", "#0078D4")
+        .attr("stroke-width", 1.5);
+      
+      svg.append("line")
+        .attr("x1", 400)
+        .attr("y1", 245)
+        .attr("x2", 190)
+        .attr("y2", 320)
+        .attr("stroke", "#0078D4")
+        .attr("stroke-width", 1.5);
+      
+      svg.append("line")
+        .attr("x1", 100)
+        .attr("y1", 320)
+        .attr("x2", 310)
+        .attr("y2", 320)
+        .attr("stroke", "#0078D4")
+        .attr("stroke-width", 1.5);
+      
+      // Define arrow marker
+      svg.append("defs").append("marker")
+        .attr("id", "arrow")
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 8)
+        .attr("refY", 0)
+        .attr("markerWidth", 6)
+        .attr("markerHeight", 6)
+        .attr("orient", "auto")
+        .append("path")
+        .attr("d", "M0,-5L10,0L0,5")
+        .attr("fill", "#D83B01");
+      
+      // Add legend
+      svg.append("rect")
+        .attr("x", 150)
+        .attr("y", 380)
+        .attr("width", 20)
+        .attr("height", 10)
+        .attr("fill", "#D83B01")
+        .attr("stroke-dasharray", "5,5")
+        .attr("stroke", "#D83B01");
+      
+      svg.append("text")
+        .attr("x", 180)
+        .attr("y", 390)
+        .attr("fill", "#252525")
+        .attr("font-size", "14px")
+        .text("Package Version References");
+      
+      svg.append("rect")
+        .attr("x", 150)
+        .attr("y", 400)
+        .attr("width", 20)
+        .attr("height", 10)
+        .attr("fill", "none")
+        .attr("stroke", "#0078D4");
+      
+      svg.append("text")
+        .attr("x", 180)
+        .attr("y", 410)
+        .attr("fill", "#252525")
+        .attr("font-size", "14px")
+        .text("Project References");
+    </script>
+  </body>
+</html>
